@@ -13,15 +13,26 @@ class Router
                 $controllerName = 'App\controllers\HomeController';
                 $actionName = 'index';
                 break;
-            case '/register':
-                $controllerName = 'App\controllers\AuthController';
-                $actionName = 'register';
+            case '/tweet':
+                $controllerName = 'App\controllers\DashController';
+                $actionName = 'tweet';
                 break;
             case '/login':
                 $controllerName = 'App\controllers\AuthController';
                 $actionName = 'login';
                 break;
-             //Adicionar novas rotas aqui....
+             case '/register':
+                $controllerName = 'App\controllers\AuthController';
+                $actionName = 'register';
+                break;
+            case '/dashboard':
+                $controllerName = 'App\controllers\AuthController';
+                $actionName = 'dash';
+                break;
+            case '/logout':
+                $controllerName = 'App\controllers\AuthController';
+                $actionName = 'logout';
+                break;
             default:
                 http_response_code(404);
                 echo "Página não encontrada!";

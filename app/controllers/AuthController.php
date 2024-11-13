@@ -37,30 +37,54 @@ class AuthController extends Controller
   }
 
   public function login()
-  {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      $username = $_POST['username'];
-      $password = $_POST['password'];
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $username = $_POST['username'];
+            $password = $_POST['password'];
 
-      $db = Database::connect();
-      $stm = $db->prepare("SELECT * FROM users WHERE username = :username");
+            // Iniciar a sessão
+            session_start();
 
-      $stm->bindParam(":username", $username);
-      $stm->execute();
+            // Verificar se os campos não estão vazios
+            if (empty($username) || empty($password)) {
+                $_SESSION['error_message'] = "Por favor, preencha todos os campos.";
+                header('Location: /login');
+                exit;
+            }
 
-      $user = $stm->fetch();
-      session_start();
+            // Verificar se o usuário existe no banco de dados
+            $db = Database::connect();
+            $stmt = $db->prepare("SELECT * FROM users WHERE username = :username");
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
+            $user = $stmt->fetch();
 
-      if($user && password_verify($password, $user['password'])){
+            if ($user && password_verify($password, $user['password'])) {
+                // Senha está correta, iniciar a sessão
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['name'] = $user['name']; // Salvando o nome completo do usuário na sessão
 
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['name'] = $user['name'];
-        $_SESSION['username'] = $user['username'];
-
-        $this->redirect('/dash');
-
-      }
+                echo "Login realizado com sucesso!";
+                header('Location: /dashboard');
+                exit;
+            } else {
+                $_SESSION['error_message'] = "Usuário ou senha incorretos.";
+                header('Location: /login');
+                exit;
+            }
+        } else {
+            // Exibir o formulário de login
+            $this->view('auth/login');
+        }
     }
-    $this->view('auth/login');
-  }
+    public function dash()
+ {
+  $sql ="SELECT * FROM equip";
+  $db = Database::connect();
+  $stm = $db->prepare($sql);
+  $equips = $stm->execute();
+
+  $this->view('dash/index', ['equips' => $equips]);
+    }
 }

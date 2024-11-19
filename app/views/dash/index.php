@@ -23,7 +23,7 @@ include('conexao.php');
             
             <!-- Formulário de Novo Agendamento -->
             <h3 class="text-xl font-semibold mt-6">Novo Agendamento</h3>
-            <form action="app/controllers/salvar_agendamento.php" method="POST" class="mt-4 bg-gray-50 p-4 rounded shadow">
+            <form action="app/controllers/DashController.php" method="POST" class="mt-4 bg-gray-50 p-4 rounded shadow">
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="data">
                         Data

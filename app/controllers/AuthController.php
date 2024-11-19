@@ -80,11 +80,16 @@ class AuthController extends Controller
     }
     public function dash()
  {
-  $sql ="SELECT * FROM equip";
-  $db = Database::connect();
-  $stm = $db->prepare($sql);
-  $equips = $stm->execute();
 
-  $this->view('dash/index', ['equips' => $equips]);
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $sql ="SELECT * FROM equip";
+    $db = Database::connect();
+    $stm = $db->prepare($sql);
+    $equips = $stm->execute();
+    
+    $this->view('dash/index', ['equips' => $equips]);
+  }
+  $this->view('dash/index');
     }
 }

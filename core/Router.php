@@ -29,6 +29,10 @@ class Router
                 $controllerName = 'App\controllers\AuthController';
                 $actionName = 'dash';
                 break;
+            case '/dashboard/salvar':
+                $controllerName = 'App\controllers\DashController';
+                $actionName = 'save';
+                 break;
             case '/logout':
                 $controllerName = 'App\controllers\AuthController';
                 $actionName = 'logout';

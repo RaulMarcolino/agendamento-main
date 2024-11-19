@@ -3,8 +3,9 @@
 namespace App\Controllers;
 
 use Core\Controller;
+use Core\Database;
 
-class HomeController extends Controller
+class DashController extends Controller
 {
     public function index()
     {
@@ -23,6 +24,8 @@ class HomeController extends Controller
             $hora = $_POST['hora'];
             $descricao = $_POST['descricao'];
 
+            $db = Database::connect();
+
             $stmt = $db->prepare("INSERT INTO agendamentos (data, hora, descricao) VALUES (:data, :hora, :descricao)");
             $stmt->bindParam(':data', $data);
             $stmt->bindParam(':hora', $hora);
@@ -30,14 +33,14 @@ class HomeController extends Controller
             if ($stmt->execute()) {
                 echo "Agendamento realizado com sucesso!";
                 // Redirecionar para a página de login
-                header('Location: /dash');
+                header('Location: /dashboard');
                 exit;
             } else {
                 echo "Ocorreu um erro ao agendar o equipamento/ambiente.";
             }
         } else {
             // Exibir o formulário de cadastro
-            $this->view('dash/index.php');
+            $this->redirect("/dashboard");
     }
   }
 }

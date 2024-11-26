@@ -5,7 +5,7 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-include('conexao.php');
+include('config.php');
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -48,7 +48,7 @@ include('conexao.php');
             </form>
 
             <!-- Lista de Agendamentos Existentes -->
-            <h3 class="text-xl font-semibold mt-6">Seus Agendamentos</h3>
+            <h3 class="text-xl font-semibold mt-6">Todos os Agendamentos</h3>
             <div class="mt-4">
                
             </div>

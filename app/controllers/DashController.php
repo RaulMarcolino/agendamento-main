@@ -43,4 +43,16 @@ class DashController extends Controller
             $this->redirect("/dashboard");
     }
   }
+  public function dash(){
+
+    $sql = "SELECT users.name, agendamentos.data, agendamentos.hora, agendamentos.descricao FROM users INNER JOIN agendamentos ON users.id = agendamentos.user_id ORDER BY agendamentos.data DESC";
+
+    $db = Database::connect();
+
+    $stm = $db->prepare($sql);
+    $tweets = $stm->execute();
+        
+    $this->view("dash/index", ['tweets' => $tweets]);
+    
+  }
 }

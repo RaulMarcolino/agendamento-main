@@ -45,20 +45,12 @@ class DashController extends Controller
             $this->redirect("/dashboard");
     }
   }
-  public function dash(){
-    session_start();
-    $db = Database::connect();
-    
-    try {
-        // Consulta para buscar todos os agendamentos
-        $stmt = $db->prepare("SELECT * FROM agendamentos ORDER BY hora");
-        $stmt->execute();
-    
-        $_SESSION['reg'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        die("Erro ao buscar agendamentos: " . $e->getMessage());
+    public function dash(){
+        session_start();
+        $db = Database::connect();
+        $sql = "SELECT users.name, agendamentos.data, agendamentos.hora, agendamentos.descricao FROM users INNER JOIN agendamentos ON users.id = agendamentos.user_id ORDER BY agendamentos.data ASC";
+        $stm = $db->prepare($sql);
+        $stm->execute();
+        $this->view("dash/index");
     }
-    $this->view("dash/index");
-    
-  }
 }

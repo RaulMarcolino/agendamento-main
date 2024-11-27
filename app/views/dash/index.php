@@ -5,7 +5,6 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-include('config.php');
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -49,9 +48,32 @@ include('config.php');
 
             <!-- Lista de Agendamentos Existentes -->
             <h3 class="text-xl font-semibold mt-6">Todos os Agendamentos</h3>
-            <div class="mt-4">
-               
-            </div>
+            <div class="container mx-auto p-4">
+        <div class="bg-white shadow-md rounded p-4">
+            <table class="table-auto w-full">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="px-4 py-2 text-left">Nome</th>
+                        <th class="px-4 py-2 text-left">Data</th>
+                        <th class="px-4 py-2 text-left">Hora</th>
+                        <th class="px-4 py-2 text-left">Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($_SESSION['reg'] as $register): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($register['nome']); ?></td>
+                            <td><?php echo htmlspecialchars($register['data']); ?></td>
+                            <td><?php echo htmlspecialchars($register['hora']); ?></td>
+                            <td><?php echo htmlspecialchars($register['descrição']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+                </tbody>
+            </table>
+        </div>
+    </div>
         </div>
     </div>
 

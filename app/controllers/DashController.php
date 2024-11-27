@@ -18,6 +18,7 @@ class DashController extends Controller
         $this->view('dash/index', ['equips' => $equips]);
     }
     public function save(){
+        session_start();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Obter os dados do formulário
             $data = $_POST['data'];
@@ -26,10 +27,11 @@ class DashController extends Controller
 
             $db = Database::connect();
 
-            $stmt = $db->prepare("INSERT INTO agendamentos (data, hora, descricao) VALUES (:data, :hora, :descricao)");
+            $stmt = $db->prepare("INSERT INTO agendamentos (user_id, data, hora, descricao) VALUES (:user_id, :data, :hora, :descricao)");
             $stmt->bindParam(':data', $data);
             $stmt->bindParam(':hora', $hora);
             $stmt->bindParam(':descricao', $descricao);
+            $stmt->bindParam(':user_id', $_SESSION['user_id']);
             if ($stmt->execute()) {
                 echo "Agendamento realizado com sucesso!";
                 // Redirecionar para a página de login
@@ -44,15 +46,19 @@ class DashController extends Controller
     }
   }
   public function dash(){
-
-    $sql = "SELECT users.name, agendamentos.data, agendamentos.hora, agendamentos.descricao FROM users INNER JOIN agendamentos ON users.id = agendamentos.user_id ORDER BY agendamentos.data DESC";
-
+    session_start();
     $db = Database::connect();
-
-    $stm = $db->prepare($sql);
-    $tweets = $stm->execute();
-        
-    $this->view("dash/index", ['tweets' => $tweets]);
+    
+    try {
+        // Consulta para buscar todos os agendamentos
+        $stmt = $db->prepare("SELECT * FROM agendamentos ORDER BY hora");
+        $stmt->execute();
+    
+        $_SESSION['reg'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        die("Erro ao buscar agendamentos: " . $e->getMessage());
+    }
+    $this->view("dash/index");
     
   }
 }

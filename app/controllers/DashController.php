@@ -51,6 +51,10 @@ class DashController extends Controller
         $sql = "SELECT users.name, agendamentos.data, agendamentos.hora, agendamentos.descricao FROM users INNER JOIN agendamentos ON users.id = agendamentos.user_id ORDER BY agendamentos.data ASC";
         $stm = $db->prepare($sql);
         $stm->execute();
+        $_SESSION = $nome['users.name'];
+        $_SESSION = $data['agendamentos.data'];
+        $_SESSION = $hora['agendamentos.hora'];
+        $_SESSION = $descricao['agendamentos.descricao'];
         $this->view("dash/index");
     }
 }

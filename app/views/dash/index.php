@@ -55,7 +55,6 @@ if (!isset($_SESSION['username'])) {
             <table class="table-auto w-full">
                 <thead>
                     <tr class="bg-gray-200">
-                        <th class="px-4 py-2 text-left">ID</th>
                         <th class="px-4 py-2 text-left">Nome</th>
                         <th class="px-4 py-2 text-left">Data</th>
                         <th class="px-4 py-2 text-left">Hora</th>
@@ -65,16 +64,14 @@ if (!isset($_SESSION['username'])) {
                 <tbody>
                     <?php
                     $sql = "SELECT * FROM agendamentos";
-                    $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                             echo "
                             <tr class='border-b'>
-                                <td class='px-4 py-2'>{$row['id']}</td>
                                 <td class='px-4 py-2'>{$row['nome']}</td>
-                                <td class='px-4 py-2'>{$row['data_agendamento']}</td>
-                                <td class='px-4 py-2'>{$row['hora_agendamento']}</td>
+                                <td class='px-4 py-2'>{$row['data']}</td>
+                                <td class='px-4 py-2'>{$row['hora']}</td>
                                 <td class='px-4 py-2'>{$row['descricao']}</td>
                             </tr>
                             ";

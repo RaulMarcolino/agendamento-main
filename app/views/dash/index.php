@@ -2,7 +2,7 @@
 include('../../../config/config.php');
 
 session_start();
-if (!isset($_SESSION['name'])) {
+if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit();
 }
@@ -12,7 +12,7 @@ if (!isset($_SESSION['name'])) {
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>Faça seu agendamento</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.1/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-amber-50">
@@ -64,13 +64,14 @@ if (!isset($_SESSION['name'])) {
                 <tbody>
                     <?php
                     $sql = "SELECT * FROM agendamentos";
+
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                             echo "
                             <tr class='border-b'>
                                 <td class='px-4 py-2'>{$row['nome']}</td>
-                                <td class='px-4 py-2'>{$row['data']}</td>
-                                <td class='px-4 py-2'>{$row['hora']}</td>
+                                <td class='px-4 py-2'>{$row['data_agendamento']}</td>
+                                <td class='px-4 py-2'>{$row['hora_agendamento']}</td>
                                 <td class='px-4 py-2'>{$row['descricao']}</td>
                             </tr>
                             ";

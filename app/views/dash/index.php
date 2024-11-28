@@ -2,7 +2,7 @@
 include('../../../config/config.php');
 
 session_start();
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['name'])) {
     header("Location: login.php");
     exit();
 }
@@ -64,7 +64,6 @@ if (!isset($_SESSION['username'])) {
                 <tbody>
                     <?php
                     $sql = "SELECT * FROM agendamentos";
-
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                             echo "
@@ -79,8 +78,6 @@ if (!isset($_SESSION['username'])) {
                     } else {
                         echo "<tr><td colspan='5' class='text-center py-4'>Nenhum agendamento encontrado</td></tr>";
                     }
-
-                    $conn->close();
                     ?>
                 </tbody>
             </table>
